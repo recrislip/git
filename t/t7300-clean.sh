@@ -698,4 +698,15 @@ test_expect_success 'git clean -xd leaves precious files alone' '
 	)
 '
 
+test_expect_success MINGW 'handle clean & core.longpaths = false nicely' '
+	git config core.longpaths false &&
+	test_when_finished git config --unset core.longpaths &&
+	a50=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa &&
+	mkdir -p $a50$a50/$a50$a50/$a50$a50 &&
+	touch $a50$a50/test.txt &&
+	touch $a50$a50/$a50$a50/$a50$a50/test.txt &&
+	test_must_fail git clean -xdf 2>.git/err &&
+	grep "too long" .git/err
+'
+
 test_done
