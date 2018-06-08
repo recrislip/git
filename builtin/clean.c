@@ -198,7 +198,8 @@ static int remove_dirs(struct strbuf *path, const char *prefix, int force_flag,
 		strbuf_setlen(path, len);
 		strbuf_addstr(path, e->d_name);
 		if (lstat(path->buf, &st)) {
-			; /* fall thru */
+			warning("Could not stat path '%s': %s",
+				path->buf, strerror(errno));
 		} else if ((!prefix && is_precious_file(&the_index, path->buf)) ||
 			   (prefix && skip_prefix(path->buf, prefix, &rel_path) &&
 			    is_precious_file(&the_index, rel_path))) {
