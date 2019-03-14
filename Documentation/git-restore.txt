@@ -144,7 +144,7 @@ $ git restore .
 ------------
 
 or to restore all working tree files with 'top' pathspec magic (see
-linkgit::gitglossary[7])
+linkgit:gitglossary[7])
 
 ------------
 $ git restore :/
