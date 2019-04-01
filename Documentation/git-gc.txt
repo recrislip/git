@@ -45,7 +45,7 @@ OPTIONS
 	With this option, 'git gc' checks whether any housekeeping is
 	required; if not, it exits without performing any work.
 +
-See the `gc.auto' option in the "CONFIGURATION" section below for how
+See the `gc.auto` option in the "CONFIGURATION" section below for how
 this heuristic works.
 +
 Once housekeeping is triggered by exceeding the limits of
