@@ -472,7 +472,7 @@ static unsigned int get_max_fd_limit(void)
 #endif
 }
 
-static const char *pack_basename(struct packed_git *p)
+const char *pack_basename(struct packed_git *p)
 {
 	const char *ret = strrchr(p->pack_name, '/');
 	if (ret)
