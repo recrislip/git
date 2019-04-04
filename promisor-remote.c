@@ -31,7 +31,7 @@ static struct promisor_remote *promisor_remote_lookup(const char *remote_name,
 	struct promisor_remote *r, *p;
 
 	for (p = NULL, r = promisors; r; p = r, r = r->next)
-		if (r->name && !strcmp(r->name, remote_name)) {
+		if (!strcmp(r->name, remote_name)) {
 			if (previous)
 				*previous = p;
 			return r;
