@@ -472,6 +472,16 @@ static unsigned int get_max_fd_limit(void)
 #endif
 }
 
+static const char *pack_basename(struct packed_git *p)
+{
+	const char *ret = strrchr(p->pack_name, '/');
+	if (ret)
+		ret = ret + 1; /* skip past slash */
+	else
+		ret = p->pack_name; /* we only have a base */
+	return ret;
+}
+
 /*
  * Do not call this directly as this leaks p->pack_fd on error return;
  * call open_packed_git() instead.
@@ -486,15 +496,16 @@ static int open_packed_git_1(struct packed_git *p)
 	ssize_t read_result;
 	const unsigned hashsz = the_hash_algo->rawsz;
 
-	if (!p->index_data) {
+	if (!p->index_data && the_repository->objects->multi_pack_index) {
 		struct multi_pack_index *m;
-		const char *pack_name = strrchr(p->pack_name, '/');
+		char *idx_name = pack_name_to_idx(pack_basename(p));
 
 		for (m = the_repository->objects->multi_pack_index;
 		     m; m = m->next) {
-			if (midx_contains_pack(m, pack_name))
+			if (midx_contains_pack(m, idx_name))
 				break;
 		}
+		free(idx_name);
 
 		if (!m && open_pack_index(p))
 			return error("packfile %s index unavailable", p->pack_name);
