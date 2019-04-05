@@ -26,6 +26,7 @@
 #include "parse-options.h"
 #include "help.h"
 #include "fetch-object.h"
+#include "promisor-remote.h"
 
 #ifdef NO_FAST_WORKING_DIRECTORY
 #define FAST_WORKING_DIRECTORY 0
@@ -6493,7 +6494,7 @@ static void add_if_missing(struct oid_array *to_fetch,
 
 void diffcore_std(struct diff_options *options)
 {
-	if (repository_format_partial_clone) {
+	if (has_promisor_remote()) {
 		/*
 		 * Prefetch the diff pairs that are about to be flushed.
 		 */
