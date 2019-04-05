@@ -1701,14 +1701,14 @@ test_expect_success '--points-at finds annotated tags of tags' '
 '
 
 test_expect_success 'recursive tagging should give advice' '
-	cat <<-EOF >expected &&
+	sed -e 's/|$//' <<-EOF >expect &&
 	hint: You have created a nested tag. The object referred to by your new is
 	hint: already a tag. If you meant to tag the object that it points to, use:
-	hint:
+	hint: |
 	hint: 	git tag -f nested annotated-v4.0^{}
 	EOF
 	git tag -m nested nested annotated-v4.0 2>actual &&
-	test_i18ncmp expected actual
+	test_i18ncmp expect actual
 '
 
 test_expect_success 'multiple --points-at are OR-ed together' '
