@@ -24,5 +24,5 @@ expression c;
 expression c;
 expression s;
 @@
-- get_commit_tree(c) = s
+- repo_get_commit_tree(the_repository, c) = s
 + c->maybe_tree = s
